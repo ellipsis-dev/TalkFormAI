@@ -78,11 +78,15 @@ export default function FormDetailPage() {
               </span>
             </div>
 
-            <Link href={'/forms/fill/' + form.id}>
-              <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                View live form
-              </button>
-            </Link>
+<Link href={'/forms/fill/' + form.id}>
+<button onClick={handleFormStatusChange} className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
+    {form.is_open ? 'Close form' : 'Open form'}
+</button>
+<Link href={'/forms/fill/' + form.id}>
+  <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+    View live form
+  </button>
+</Link>
           </div>
           {form.created_at && (
             <p className="text-xs text-gray-600">
