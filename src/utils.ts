@@ -132,8 +132,19 @@ export async function submitResponseToSupabase(
 }
 
 export const removeStartAndEndQuotes = (str: string | null) => {
-  if (!str) {
-    return str;
+
+export async function closeFormInSupabase(
+  formId: string,
+  supabase: SupabaseClient<Database>
+): Promise<Form | Error> {
+  const { data, error } = await supabase
+    .from('forms')
+    .update({ is_open: false })
+    .eq('id', formId);
+  if (error) {
+    return Error(error.message, { cause: error });
+  } else if (data === null) {
+    return Error(`No form found with id '${formId}'`);
   }
-  return str.replace(/^"(.*)"$/, '$1');
-};
+  return data;
+}
