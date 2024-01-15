@@ -78,7 +78,9 @@ export default function FormDetailPage() {
               </span>
             </div>
 
-            <Link href={'/forms/fill/' + form.id}>
+            <button className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" disabled={!form.is_open} onClick={handleCloseForm}>
+              Close form
+            </button>
               <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                 View live form
               </button>
@@ -144,6 +146,11 @@ export default function FormDetailPage() {
     </Page>
   );
 }
+
+async function handleCloseForm() {
+  // TODO: Implement function to close form
+}
+
 function respectNewLines(text: string | null | undefined) {
   return (text ?? '').split('\n').map((line, i) => (
     <span key={i}>
