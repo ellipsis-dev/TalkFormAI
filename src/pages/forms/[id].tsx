@@ -78,11 +78,16 @@ export default function FormDetailPage() {
               </span>
             </div>
 
-            <Link href={'/forms/fill/' + form.id}>
-              <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                View live form
+            <div className="flex gap-x-2">
+              <Link href={'/forms/fill/' + form.id}>
+                <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  View live form
+                </button>
+              </Link>
+              <button className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" onClick={() => closeForm(form.id)}>
+                Close form
               </button>
-            </Link>
+            </div>
           </div>
           {form.created_at && (
             <p className="text-xs text-gray-600">
@@ -151,4 +156,8 @@ function respectNewLines(text: string | null | undefined) {
       <br />
     </span>
   ));
+}
+
+async function closeForm(formId: string) {
+  // TODO: Call API endpoint to update form's is_open status
 }
