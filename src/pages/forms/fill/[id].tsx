@@ -86,7 +86,10 @@ export function InnerChat(props: {
   const [error, setError] = useState<Error | null>(null);
 
   const handleSubmit = async (userMessage?: string) => {
-    const messagesToSend =
+    if (form.is_open === false) {
+      alert('This form is closed and cannot accept new submissions.');
+      return;
+    }
       userMessage && userMessage.trim()
         ? [
             ...messages,
