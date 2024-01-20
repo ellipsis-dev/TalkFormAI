@@ -1,4 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 import OpenAI from 'openai';
 import { LLMRequest, LLMResponse } from '../../types';
@@ -29,4 +28,18 @@ export default async function handler(
   console.log(`LLM middleware: got completion: ${JSON.stringify(completion)}`);
   const response: LLMResponse = { completion };
   res.status(200).json(response);
+}
+
+export async function getDiffData(
+  req: NextApiRequest,
+  res: NextApiResponse<LLMResponse | { error: string }>
+) {
+  // TODO: Implement the logic to get the diff data
+}
+
+export async function getAllOtherData(
+  req: NextApiRequest,
+  res: NextApiResponse<LLMResponse | { error: string }>
+) {
+  // TODO: Implement the logic to get all other data
 }

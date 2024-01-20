@@ -99,7 +99,7 @@ export function InnerChat(props: {
     setMessages(messagesToSend);
     setInputValue('');
     setIsWaiting(true);
-    const assistantResponse = await callLLM(PROMPT_FILL(form), messagesToSend);
+    const assistantResponse = await callLLM(PROMPT_FILL(form), messagesToSend, 'getDiffData');
     if (assistantResponse instanceof Error) {
       setError(assistantResponse);
       return;
@@ -125,7 +125,8 @@ export function InnerChat(props: {
           submitResponseToSupabase(
             form.id,
             parsed.submission,
-            props.supabase
+            props.supabase,
+            'getAllOtherData'
           ).then((maybeError) => {
             setIsDone(true);
             setSubmission(parsed.submission);

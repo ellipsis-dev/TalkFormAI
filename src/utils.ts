@@ -11,8 +11,10 @@ import { v4 } from 'uuid';
 import { Database, Json } from '../types/supabase';
 
 export const callLLM = async (
+export const callLLM = async (
   systemPrompt: string,
-  messages: ChatMessage[]
+  messages: ChatMessage[],
+  endpoint: string
 ) => {
   const data: LLMRequest = {
     completion_create: {
@@ -21,7 +23,7 @@ export const callLLM = async (
       messages: [{ role: 'system', content: systemPrompt }, ...messages],
     },
   };
-  const response = await fetch('/api/llm', {
+  const response = await fetch(`/api/${endpoint}`, {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
@@ -35,7 +37,6 @@ export const callLLM = async (
   const json: LLMResponse = await response.json();
   return json.completion.choices[0].message;
 };
-
 export async function getUserFromSupabase(
   session: Session | null,
   supabase: SupabaseClient<Database>,
@@ -130,7 +131,30 @@ export async function submitResponseToSupabase(
     return response;
   }
 }
+export async function submitResponseToSupabase(
+  formId: string,
+  responseJson: Json,
+  supabase: SupabaseClient<Database>,
+  endpoint: string
+): Promise<Response | Error> {
+  const response: Response = {
+    id: v4(),
+    form_id: formId,
+    fields: responseJson,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  };
+  console.log('Submitting response to Supabase', { formId, response });
+  const { error } = await supabase.from('responses').insert(response);
 
+  if (error) {
+    console.error(`Error creating response`, { response, error });
+    return Error(error.message, { cause: error });
+  } else {
+    console.log('Successfully created response', response);
+    return response;
+  }
+}
 export const removeStartAndEndQuotes = (str: string | null) => {
   if (!str) {
     return str;
