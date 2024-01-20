@@ -83,6 +83,9 @@ export default function FormDetailPage() {
                 View live form
               </button>
             </Link>
+            <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={() => updateFormStatusInSupabase(form.id, !form.is_open)}>
+                {form.is_open ? 'Close Form' : 'Open Form'}
+            </button>
           </div>
           {form.created_at && (
             <p className="text-xs text-gray-600">
