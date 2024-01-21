@@ -99,7 +99,7 @@ export function InnerChat(props: {
     setMessages(messagesToSend);
     setInputValue('');
     setIsWaiting(true);
-    const assistantResponse = await callLLM(PROMPT_FILL(form), messagesToSend);
+    const assistantResponse = await callLLM(PROMPT_FILL(form), messagesToSend, '/api/diffData');
     if (assistantResponse instanceof Error) {
       setError(assistantResponse);
       return;

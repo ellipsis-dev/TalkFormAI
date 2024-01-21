@@ -12,7 +12,8 @@ import { Database, Json } from '../types/supabase';
 
 export const callLLM = async (
   systemPrompt: string,
-  messages: ChatMessage[]
+  messages: ChatMessage[],
+  endpoint: string
 ) => {
   const data: LLMRequest = {
     completion_create: {
@@ -21,7 +22,7 @@ export const callLLM = async (
       messages: [{ role: 'system', content: systemPrompt }, ...messages],
     },
   };
-  const response = await fetch('/api/llm', {
+  const response = await fetch(endpoint, {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
@@ -35,7 +36,6 @@ export const callLLM = async (
   const json: LLMResponse = await response.json();
   return json.completion.choices[0].message;
 };
-
 export async function getUserFromSupabase(
   session: Session | null,
   supabase: SupabaseClient<Database>,
