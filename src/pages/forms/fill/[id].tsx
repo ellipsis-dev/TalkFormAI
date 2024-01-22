@@ -46,7 +46,7 @@ export default function CreateForm() {
 export function CreateFormInner(props: { formId: string }) {
   const { formId } = props;
   const supabase = createClientComponentClient<Database>();
-  const [form, setForm] = useState<Form | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   useEffect(() => {
     if (!form) {
@@ -55,9 +55,12 @@ export function CreateFormInner(props: { formId: string }) {
           console.error(maybeForm.message);
           setError(maybeForm);
         } else {
+        } else {
+          if (!maybeForm.is_open) {
+            setIsFormOpen(false);
+          }
           setForm(maybeForm);
         }
-      });
     }
   }, []); // The empty array ensures this effect runs only once on mount
   return form ? (
@@ -71,7 +74,21 @@ export function CreateFormInner(props: { formId: string }) {
       )}
     </>
   );
-}
+  return isFormOpen ? (
+    form ? (
+      <InnerChat form={form} supabase={supabase} />
+    ) : (
+      <>
+        {error ? (
+          ErrorBox(error)
+        ) : (
+          <h1 className="text-3xl font-extrabold mb-6">Loading...</h1>
+        )}
+      </>
+    )
+  ) : (
+    <h1 className="text-3xl font-extrabold mb-6">This form is currently closed.</h1>
+  );
 export function InnerChat(props: {
   form: Form;
   supabase: SupabaseClient<Database>;
