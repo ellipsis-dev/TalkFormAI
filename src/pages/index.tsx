@@ -50,7 +50,7 @@ function GetStartedButtons() {
     <>
       <div className="flex flex-wrap justify-center items-center md:space-y-0">
         <Link
-          href="https://github.com/nsbradford/talkformai" // Replace with your repo URL
+          href="https://github.com/nsbradford/talkformai"
           className="inline-block bg-gray-800 text-white font-semibold py-2 px-4 my-2 mx-1 rounded-lg transition duration-200 ease-in-out hover:bg-gray-600 border-2 border-transparent"
           target="_blank"
           rel="noopener noreferrer"

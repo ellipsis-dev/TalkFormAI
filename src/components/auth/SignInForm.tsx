@@ -15,7 +15,7 @@ export default function SignInForm() {
 
   async function signInWithPassword(email: string, password: string) {
     setIsMainButtonDisabled(true);
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -96,7 +96,7 @@ export default function SignInForm() {
         </div>
         <div>
           <button
-            disabled={isMainButtonDisabled}
+            disabled={() => isMainButtonDisabled}
             type="submit"
             className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >

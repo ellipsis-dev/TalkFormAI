@@ -10,10 +10,10 @@ import { Session, SupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { v4 } from 'uuid';
 import { Database, Json } from '../types/supabase';
 
-export const callLLM = async (
+export async function callLLM(
   systemPrompt: string,
   messages: ChatMessage[]
-) => {
+) {
   const data: LLMRequest = {
     completion_create: {
       model: 'gpt-3.5-turbo',
