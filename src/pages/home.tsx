@@ -12,7 +12,7 @@ export default function HomePage() {
   const { push } = useRouter();
   const { isLoading: isSessionLoading, session, error } = useSessionContext();
   const supabase = createClientComponentClient<Database>();
-  const [user, setUser] = useState<null | User>(null);
+  // const [user, setUser] = useState<null | User>(null);
 
   useEffect(() => {
     if (!isSessionLoading && !session) {
