@@ -25,7 +25,7 @@ export default function NewFormPage(props: NewFormPageProps) {
   // const [description, setDescription] = useState('');
   const [formTopic, setFormTopic] = useState('');
   const [title, setTitle] = useState('');
-  const [fieldsGuidance, setFieldsGuidance] = useState('');
+  const [isFormOpen, setIsFormOpen] = useState(true);
   const [fieldsSchema, setFieldsSchema] = useState('{}');
   const { push } = useRouter();
   const [user, setUser] = useState<null | User>(null);
@@ -70,7 +70,7 @@ export default function NewFormPage(props: NewFormPageProps) {
         fields_guidance: fieldsGuidance,
         fields_schema: fieldsSchema,
         id: formId,
-        is_open: true,
+        is_open: isFormOpen,
         name: title,
         user_id: user.id,
       },
@@ -200,6 +200,7 @@ Your output:
 
   const renderStepContent = () => {
     if (step === 1) {
+    if (step === 1) {
       return (
         <div className="sm:col-span-4 px-4">
           <label
@@ -222,6 +223,17 @@ Your output:
             />
           </div>
           <div className="mt-4">
+            <label htmlFor="isFormOpen" className="block text-xl font-medium leading-6 text-gray-900">
+              Form is open
+            </label>
+            <input
+              type="checkbox"
+              id="isFormOpen"
+              checked={isFormOpen}
+              onChange={(e) => setIsFormOpen(e.target.checked)}
+            />
+          </div>
+          <div className="mt-4">
             <button
               type="button"
               onClick={transitionToStep2WithLLM}
@@ -232,6 +244,7 @@ Your output:
           </div>
         </div>
       );
+    } else {
     } else {
       return (
         <div className="col-span-full px-4">
@@ -351,16 +364,3 @@ Your output:
             </Link>
           )}
           {step === 2 && (
-            <button
-              type="submit"
-              disabled={showSpinner}
-              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Save
-            </button>
-          )}
-        </div>
-      </form>
-    </Page>
-  );
-}
