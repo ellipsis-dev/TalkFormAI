@@ -22,7 +22,7 @@ export default function NewFormPage(props: NewFormPageProps) {
   const supabase = createClientComponentClient<Database>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [step, setStep] = useState(1);
-  // const [description, setDescription] = useState('');
+  const [isOpen, setIsOpen] = useState(true);
   const [formTopic, setFormTopic] = useState('');
   const [title, setTitle] = useState('');
   const [fieldsGuidance, setFieldsGuidance] = useState('');
@@ -57,7 +57,9 @@ export default function NewFormPage(props: NewFormPageProps) {
   }, [step]);
 
   async function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
-    if (user === null) {
+    if (user === null || !isOpen) {
+      // Display the message and return
+      alert('This form is no longer accepting responses. If you believe this is an error please reach out to the form sender.');
       return;
     }
     event.preventDefault();
@@ -101,20 +103,6 @@ export default function NewFormPage(props: NewFormPageProps) {
 
     console.log('titleResponse', titleResponse);
     conversationThread.push(titleResponse);
-    // conversationThread.push({
-    //   role: 'user',
-    //   content: `Create a short description of this survey form. This description will be given to a person who is in charge of administering the form data collection. This person will use this description to understand what the form is about, so that they can collect the correct information from respondents.  Don't include information that is not relevant to the form, or state that this is a form. This survey administrator already knows that, instead they care about information relation the forms content. For example, if you want to collect a respondent\'s name and age, you can write: "This form is to collect the names and ages of people attending a birthday party."`,
-    // });
-    // const descriptionResponse = await callLLM(PROMPT_BUILD, conversationThread);
-    // if (descriptionResponse instanceof Error) {
-    //   console.error('No response from LLM');
-    //   setStep(1);
-    //   return;
-    // }
-    // setDescription(removeStartAndEndQuotes(descriptionResponse.content) || '');
-
-    // console.log('descriptionResponse', descriptionResponse);
-    // conversationThread.push(descriptionResponse);
     conversationThread.push({
       role: 'user',
       content: `Now, we must write instructions to the survey administrator. Write any guidance that the administrator will need, such as conditional information to collect or how to answer questions.  The survey administrator will reference this guidence when deciding which follow up questions to ask or how to interpret the answers. Be concise.
@@ -126,7 +114,7 @@ Examples:
 Example instructions:
 ----
 Movie Night RSVP
-- Name: string (double check with user if it doesn't look like a real name)
+- Name: string (double check with user if it doesn\'t look like a real name)
 - Email: valid email address
 - RSVP: yes/no
 
@@ -137,7 +125,7 @@ If RSVP is yes:
 
 ----
 Startup marketing survey
-- Name: string (double check with user if it doesn't look like a real name)
+- Name: string (double check with user if it doesn\'t look like a real name)
 - Email: valid email address
 - Company name: string
 - Job title: string
