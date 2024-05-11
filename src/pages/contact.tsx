@@ -15,7 +15,7 @@ const teamMembers = [
   },
   {
     name: 'Hunter Brooks',
-    subtitle: 'Building virtual teammates for developers',
+    subtitle: 'Building AI software engineers installed in your repository',
     website: 'bitbuilder.ai',
     image: 'https://avatars.githubusercontent.com/u/24214708',
     socials: {
