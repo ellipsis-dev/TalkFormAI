@@ -2,6 +2,12 @@ version: 1.1
 
 workspace_type: "internal_ec2"
 
+include:
+  - "src/"
+  - "tests/"
+  - "types/"
+  - "package.json"
+
 commands: 
   - name: "build"
     description: "Make sure everything still works. Fix only errors, ignore warnings."
