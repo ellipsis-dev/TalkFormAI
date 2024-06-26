@@ -96,5 +96,4 @@ Then, when you open up the project in VSCode, just click "Reopen in Container".
 
 
 ## About
-
-See our [about page](https://www.talkform.ai/about).
+See our [about page](https://www.talkform.ai/about) to learn more.
